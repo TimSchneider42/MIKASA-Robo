@@ -1,16 +1,26 @@
 from setuptools import setup, find_packages
 import os
-from pkg_resources import parse_requirements
-
-def read_requirements(filename):
-    with open(filename, 'r') as f:
-        return [str(req) for req in parse_requirements(f)]
 
 setup(
     name="mikasa_robo_suite",
     version="0.0.5",
     packages=find_packages(),
-    install_requires=read_requirements('requirements.txt'), 
+    install_requires=[
+        "gymnasium",
+        "mani_skill",
+        "matplotlib",
+        "numpy",
+        "torch",
+        "wandb",
+        "tensorboard",
+        "colorama",
+        "tqdm",
+        "pandas",
+        "ipywidgets",
+        "opencv-python",
+        "gputil",
+        "psutil",
+    ],
     author="Egor Cherepanov",
     author_email="cherepanovegor2018@gmail.com",
     description="Gym-like memory-intensive environmtnts for robotic tabletop manipulation",
