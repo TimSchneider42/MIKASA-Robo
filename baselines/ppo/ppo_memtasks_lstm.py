@@ -63,7 +63,7 @@ class FlattenRGBDObservationWrapper(gym.ObservationWrapper):
 
         sample_obs, _ = env.reset()
         new_obs = self.observation(sample_obs)
-        self.base_env.update_obs_space(new_obs)
+        self.base_env.unwrapped.update_obs_space(new_obs)
 
     def observation(self, observation: Dict):
         # Save oracle_info if it exists
@@ -102,13 +102,13 @@ class FlattenRGBDObservationWrapper(gym.ObservationWrapper):
                         extra_agent[key] = observation.pop(key)
 
                 # Flatten the extra_agent dict
-                extra_agent_flat = common.flatten_state_dict(extra_agent, use_torch=True, device=self.base_env.device)
+                extra_agent_flat = common.flatten_state_dict(extra_agent, use_torch=True, device=self.base_env.unwrapped.device)
                 ret['joints'] = extra_agent_flat
 
                 filtered_obs = {k: v for k, v in observation.items() if k not in ['prompt', 'oracle_info', 'extra']}
 
             observation = common.flatten_state_dict(
-                filtered_obs, use_torch=True, device=self.base_env.device
+                filtered_obs, use_torch=True, device=self.base_env.unwrapped.device
             )
         
         if self.include_state and not (self.include_rgb or self.include_depth):
